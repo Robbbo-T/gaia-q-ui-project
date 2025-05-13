@@ -1,0 +1,21 @@
+name: Documentation Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - feature/*
+
+jobs:
+  validate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate Markdown
+        run: npx markdownlint-cli "**/*.md"
+
+      - name: Check for Missing Documentation
+        run: npm run docs:check # Custom script to validate documentation coverage
