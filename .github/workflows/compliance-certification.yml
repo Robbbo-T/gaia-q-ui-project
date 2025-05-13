@@ -1,0 +1,21 @@
+name: Compliance Certification
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  compliance-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Static Analysis for Compliance
+        run: npm run compliance-check # Custom script for DO-178C/DO-254 checks
+
+      - name: Generate Traceability Matrix
+        run: npm run traceability
