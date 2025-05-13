@@ -1,0 +1,31 @@
+name: Dependency Update Automation
+
+on:
+  schedule:
+    - cron: "0 4 * * 1" # Run weekly on Mondays
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Update Dependencies
+        run: npm update
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git commit -am "Update dependencies"
+          git push
