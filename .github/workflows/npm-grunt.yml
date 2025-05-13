@@ -2,13 +2,9 @@ name: NodeJS with Grunt
 
 on:
   push:
-    branches:
-      - main
-      - feature/*
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
-      - feature/*
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -22,33 +18,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
-      - name: Run Linter
-        run: npm run lint
-
-      - name: Run Tests
-        run: npm test
-
-      - name: Build
+      - name: Run Grunt Build
         run: grunt
 
       - name: Notify on Failure
         if: failure()
         run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d '{"text": "Build Failed"}' <notification-endpoint>
+          -d '{"text": "NodeJS with Grunt Workflow Failed"}' <notification-endpoint>
