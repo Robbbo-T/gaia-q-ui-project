@@ -1,14 +1,3 @@
----
-
-`<p align="center">
-  <img src="./public/images/gaia-q-ui-logo.png" alt="GAIA-Q-UI Logo" width="200">
-  <br>
-  <em>Transforming Aerospace Documentation & Design</em>
-</p>
-````## Additional Documentation Recommendations
-
-To complement this README, I recommend creating the following additional documentation files:
-
 1. **Architecture Overview Document**
 
 1. Detailed system architecture diagrams
